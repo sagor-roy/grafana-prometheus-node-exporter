@@ -1,0 +1,19 @@
+global:
+  smtp_smarthost: "sandbox.smtp.mailtrap.io:2525"
+  smtp_from: "alertmanager@example.com"
+  smtp_auth_username: "44bc0298dd22ee"
+  smtp_auth_password: "687a167eaa05f1"
+  smtp_require_tls: true
+
+route:
+  receiver: "mailtrap"
+
+receivers:
+  - name: "mailtrap"
+    email_configs:
+      - to: "youremail@example.com"
+        send_resolved: true
+        html: |
+          <b>Alert:</b> {{ .CommonAnnotations.summary }}<br>
+          <b>Description:</b> {{ .CommonAnnotations.description }}<br>
+          <b>Severity:</b> {{ .CommonLabels.severity }}<br>
